@@ -10,13 +10,19 @@ class ToDoForm extends Component {
 
   addToDoItem = event => {
     event.preventDefault();
-    console.log(this.toDoRef);
-    const item = {
-      text: this.toDoRef.current.value,
-      checked: false
-    };
-    this.props.addToDo(item);
-    event.currentTarget.reset();
+
+    if (
+      this.toDoRef.current.value !== null &&
+      this.toDoRef.current.value !== undefined &&
+      this.toDoRef.current.value !== ""
+    ) {
+      const item = {
+        text: this.toDoRef.current.value,
+        checked: false
+      };
+      this.props.addToDo(item);
+      event.currentTarget.reset();
+    }
   };
 
   render() {

@@ -16,13 +16,30 @@ function DoneBanner(props) {
   );
 }
 
+function ProgressBar(props) {
+  if (props.show) {
+    return null;
+  }
+
+  return (
+    <div className="progress">
+    <Line
+      percent={props.progress}
+      strokeWidth="1"
+      strokeColor="#aca0bc"
+    />
+    <p>{props.progress}% Done</p>
+  </div>
+  );
+}
+
 class ToDoList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       toDos: {},
       progress: 0,
-      showDoneBanner: true
+      emptyList: true
     };
   }
 
@@ -51,7 +68,7 @@ class ToDoList extends Component {
     const toDos = { ...this.state.toDos };
     toDos[`toDo${Date.now()}`] = toDo;
     let progress = await this.getProgress(toDos);
-    this.setState({ toDos, progress, showDoneBanner: false });
+    this.setState({ toDos, progress, emptyList: false });
   };
 
   // MARK AS DONE/NOT DONE
@@ -69,7 +86,7 @@ class ToDoList extends Component {
 
     if (Object.keys(toDos).length === 0) {
       let progress = this.getProgress(toDos);
-      this.setState({ toDos, progress, showDoneBanner: true });
+      this.setState({ toDos, progress: 0, emptyList: true });
     } else {
       let progress = this.getProgress(toDos);
       this.setState({ toDos, progress });
@@ -96,7 +113,7 @@ class ToDoList extends Component {
     });
 
     if (Object.keys(toDos).length === 0) {
-      this.setState({ toDos, progress: 0, showDoneBanner: true });
+      this.setState({ toDos, progress: 0, emptyList: true });
     } else {
       let progress = this.getProgress(toDos);
       this.setState({ toDos, progress });
@@ -107,7 +124,7 @@ class ToDoList extends Component {
   deleteAllTodos = () => {
     const toDos = { ...this.state.toDos };
     const emptyToDos = {};
-    this.setState({ toDos: emptyToDos, progress: 0, showDoneBanner: true });
+    this.setState({ toDos: emptyToDos, progress: 0, emptyList: true });
   };
 
   componentDidUpdate() {
@@ -117,7 +134,8 @@ class ToDoList extends Component {
   render() {
     return (
       <div className="content">
-        <DoneBanner show={this.state.showDoneBanner} />
+        <DoneBanner show={this.state.emptyList} />
+
         <ul className="list">
           {Object.keys(this.state.toDos).map(key => (
             <ToDoItem
@@ -130,14 +148,7 @@ class ToDoList extends Component {
           ))}
         </ul>
 
-        <div className="progress">
-          <Line
-            percent={this.state.progress}
-            strokeWidth="1"
-            strokeColor="#aca0bc"
-          />
-          <p>{this.state.progress}% Done</p>
-        </div>
+        <ProgressBar show={this.state.emptyList} progress={this.state.progress} />
 
         <ToDoForm
           addToDo={this.addToDo}
