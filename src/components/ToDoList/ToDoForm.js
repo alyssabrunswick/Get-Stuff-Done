@@ -1,12 +1,5 @@
-// @flow
-/*
-   NOTE: This file was auto-generated for a component
-   named "ToDoForm"; it is intended to be modified as
-   needed to be useful.
-*/
-
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class ToDoForm extends Component {
   toDoRef = React.createRef();
@@ -29,7 +22,13 @@ class ToDoForm extends Component {
   render() {
     return (
       <form className="inline-form" onSubmit={this.addToDoItem}>
-        <input name="name" id="toDo" ref={this.toDoRef} type="text" placeholder="Add to-do item" />
+        <input
+          name="name"
+          id="toDo"
+          ref={this.toDoRef}
+          type="text"
+          placeholder="Add to-do item"
+        />
         <button type="submit">+</button>
       </form>
     );
