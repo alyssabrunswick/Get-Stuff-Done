@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+
+import 'normalize.css';
 import './App.css';
+
+import ToDoList from './components/ToDoList/ToDoList';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Get Stuff Done</h1>
+      <div className="app">
+        <header className="header">
+          <img src={logo} className="logo" alt="logo" />
         </header>
+        <ToDoList></ToDoList>
       </div>
     );
   }
